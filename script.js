@@ -18,10 +18,10 @@
 
 // save initials and score
 // questions will be asked
-const question = [{
+const Questions = [{
     id: 0,
-    question: "In which HTML element do we put JavaScript?",
-    answers: [{
+    q: "In which HTML element do we put JavaScript?",
+    a: [{
             text: "<js>",
             correct: false
         },
@@ -40,8 +40,8 @@ const question = [{
     ]
 }, {
     id: 1,
-    question: "Where is the correct place to insert a  JavaScript?",
-    answers: [{
+    q: "Where is the correct place to insert a  JavaScript?",
+    a: [{
             text: "the <body> section",
             correct: false
         },
@@ -60,8 +60,8 @@ const question = [{
     ]
 }, {
     id: 2,
-    question: "What is the correct syntax when referring to an external script that is called 'script.js'?",
-    answers: [{
+    q: "What is the correct syntax when referring to an external script that is called 'script.js'?",
+    a: [{
             text: "<script href='script.js'>",
             correct: false
         },
@@ -80,8 +80,8 @@ const question = [{
     ]
 }, {
     id: 3,
-    question: "How do you create a function on JavaScript?",
-    answers: [{
+    q: "How do you create a function on JavaScript?",
+    a: [{
             text: "function myFunction()",
             correct: true
         },
@@ -100,8 +100,8 @@ const question = [{
     ]
 }, {
     id: 4,
-    question: "How do you write an IF statement in JavaScript?",
-    answers: [{
+    q: "How do you write an IF statement in JavaScript?",
+    a: [{
             text: "if i==5 then",
             correct: false
         },
@@ -120,8 +120,8 @@ const question = [{
     ]
 }, {
     id: 5,
-    question: "How does a WHILE loop begin?",
-    answers: [{
+    q: "How does a WHILE loop begin?",
+    a: [{
             text: "while( (i<=10;i++)",
             correct: false
         },
@@ -140,8 +140,8 @@ const question = [{
     ]
 }, {
     id: 6,
-    question: "How does a FOR loop begin?",
-    answers: [{
+    q: "How does a FOR loop begin?",
+    a: [{
             text: "for (i=0;i<=5;i++)",
             correct: true
         },
@@ -160,8 +160,8 @@ const question = [{
     ]
 }, {
     id: 7,
-    question: "Which event occurs when the user clicks on HTML element?",
-    answers: [{
+    q: "Which event occurs when the user clicks on HTML element?",
+    a: [{
             text: "onchange",
             correct: false
         },
@@ -180,8 +180,8 @@ const question = [{
     ]
 }, {
     id: 8,
-    question: "How do you add a comment on JavaScript?",
-    answers: [{
+    q: "How do you add a comment on JavaScript?",
+    a: [{
             text: "//This is a comment",
             correct: true
         },
@@ -200,8 +200,8 @@ const question = [{
     ]
 }, {
     id: 9,
-    question: "How do you round the number 7.25 to the nearest integer on JavaScript?",
-    answers: [{
+    q: "How do you round the number 7.25 to the nearest integer on JavaScript?",
+    a: [{
             text: "Math.round(7.25)",
             correct: true
         },
@@ -232,7 +232,7 @@ function iterate(id) {
     const question = document.getElementById("question");
 
     // Setting Question Text
-    question.innerText = question[id].q;
+    question.innerText = Questions[id].q;
 
     // Getting Options
     const op1= document.getElementById('op1');
@@ -241,16 +241,16 @@ function iterate(id) {
     const op4= document.getElementById('op4');
 
     // Providing Option Text
-    op1.innerText = question[id].a[0].text;
-    op2.innerText = question[id].a[1].text;
-    op3.innerText = question[id].a[2].text;
-    op4.innerText = question[id].a[3].text;
+    op1.innerText = Questions[id].a[0].text;
+    op2.innerText = Questions[id].a[1].text;
+    op3.innerText = Questions[id].a[2].text;
+    op4.innerText = Questions[id].a[3].text;
 
     // Providing True or False value to options
-    op1.value = question[id].a[0].correct;
-    op2.value = question[id].a[1].correct;
-    op3.value = question[id].a[2].correct;
-    op4.value = question[id].a[3].correct;
+    op1.value = Questions[id].a[0].correct;
+    op2.value = Questions[id].a[1].correct;
+    op3.value = Questions[id].a[2].correct;
+    op4.value = Questions[id].a[3].correct;
 
     var selected = "";
 
@@ -313,7 +313,18 @@ if (start) {
 }
 
 //Next button and method
-const next
+const next = document.getElementsByClassName ('next')[0];
+var id = 0;
+
+next.addEventListener("click", () => {
+    start = false;
+    if (id <2 ) {
+        id++;
+        iterate(id);
+        console.log(id);
+    }
+})
+
 const startQuiz = document.getElementById("startbtn");
 
 startQuiz.addEventListener("click",function(){
@@ -347,9 +358,9 @@ function test(arg) {
 
 console.log(document.querySelector(".option-container").children[0])
 
-for (let i = 0; i <= 3; i++) {
+//for (let i = 0; i <= 3; i++) {
 
-    document.querySelector(".option-container").children[i].innerHTML = i
+    //document.querySelector(".option-container").children[i].innerHTML = i
 
-    document.querySelector(".option-container").children[i].setAttribute("onclick", `test(${fish[0].answers[i].correct})`)
-}
+    //document.querySelector(".option-container").children[i].setAttribute("onclick", `test(${Questions[0].a[i].correct})`)
+//}

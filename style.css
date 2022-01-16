@@ -16,11 +16,13 @@ body{
     width: 15vw;
     height: 10vh;
     font-size: larger;
-    background-color: cornsilk;
+    background-color: greenyellow;
     padding: 0;
     margin: 0;
     width:25vw;
     height: 25vh;
+    display: block;
+    margin: 0 auto;
 }
 .question-container{
     margin: 10px;
