@@ -254,8 +254,66 @@ function iterate(id) {
 
     var selected = "";
 
-    
+    // Show selection for op1
+    op1.addEventListener("click", () => {
+        op1.style.backgroundColor = "green";
+        op2.style.backgroundColor = "red";
+        op3.style.backgroundColor = "red";
+        op4.style.backgroundColor = "red";
+        // value for option button 
+        selected = op1.value;
+    })
+
+    // Show selection for op2
+    op2.addEventListener("click", () => {
+        op1.style.backgroundColor = "red";
+        op2.style.backgroundColor = "green";
+        op3.style.backgroundColor = "red";
+        op4.style.backgroundColor = "red";
+        selected = op2.value;
+    })
+
+    op3.addEventListener("click", () => {
+        op1.style.backgroundColor = "red";
+        op2.style.backgroundColor = "red";
+        op3.style.backgroundColor = "green";
+        op4.style.backgroundColor = "red";
+        
+        selected = op3.value;
+    })
+
+    op4.addEventListener("click", () => {
+        op1.style.backgroundColor = "red";
+        op2.style.backgroundColor = "red";
+        op3.style.backgroundColor = "red";
+        op4.style.backgroundColor = "green";
+
+        selected = op4.value;
+    })
+
+    // Grabbing evaluate button
+    const evaluate = document.getElementsByClassName("evaluate");
+
+    // Evaluate method
+    evaluate[0].addEventListener("click", () => {
+        if (selected == "true") {
+            result[0].innerHTML = "True";
+            result[0].style.color = "blue";
+
+        } else {
+            result[0].innerHTML = "False";
+            result[0].innerHTML = "False";
+            result[0].style.color = "red";
+        }
+    })
 }
+
+if (start) {
+    iterate("0")
+}
+
+//Next button and method
+const next
 const startQuiz = document.getElementById("startbtn");
 
 startQuiz.addEventListener("click",function(){
