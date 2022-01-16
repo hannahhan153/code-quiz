@@ -18,7 +18,7 @@
 
 // save initials and score
 // questions will be asked
-var question = [{
+const question = [{
     id: 0,
     question: "In which HTML element do we put JavaScript?",
     answers: [{
@@ -221,6 +221,41 @@ var question = [{
 }]
 var score = 0
 var time = 5
+var start = true;
+// Iterate function displays questions and options based on "id"
+function iterate(id) {
+    // Getting Result displayed
+    var result = document.getElementsByClassName("result");
+    result[0].innerText = "";
+
+    // Getting Question
+    const question = document.getElementById("question");
+
+    // Setting Question Text
+    question.innerText = question[id].q;
+
+    // Getting Options
+    const op1= document.getElementById('op1');
+    const op2= document.getElementById('op2');
+    const op3= document.getElementById('op3');
+    const op4= document.getElementById('op4');
+
+    // Providing Option Text
+    op1.innerText = question[id].a[0].text;
+    op2.innerText = question[id].a[1].text;
+    op3.innerText = question[id].a[2].text;
+    op4.innerText = question[id].a[3].text;
+
+    // Providing True or False value to options
+    op1.value = question[id].a[0].correct;
+    op2.value = question[id].a[1].correct;
+    op3.value = question[id].a[2].correct;
+    op4.value = question[id].a[3].correct;
+
+    var selected = "";
+
+    
+}
 const startQuiz = document.getElementById("startbtn");
 
 startQuiz.addEventListener("click",function(){
