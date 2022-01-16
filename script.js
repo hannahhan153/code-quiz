@@ -17,3 +17,246 @@
 // game is over
 
 // save initials and score
+// questions will be asked
+var question = [{
+    id: 0,
+    question: "In which HTML element do we put JavaScript?",
+    answers: [{
+            text: "<js>",
+            correct: false
+        },
+        {
+            text: "<javascript>",
+            correct: false
+        },
+        {
+            text: "<script>",
+            correct: true
+        },
+        {
+            text: "<scripting>",
+            correct: false
+        }
+    ]
+}, {
+    id: 1,
+    question: "Where is the correct place to insert a  JavaScript?",
+    answers: [{
+            text: "the <body> section",
+            correct: false
+        },
+        {
+            text: "the <div> section",
+            correct: false
+        },
+        {
+            text: "the <head> section",
+            correct: false
+        },
+        {
+            text: "both are the <body> and <head> are correct",
+            correct: true
+        }
+    ]
+}, {
+    id: 2,
+    question: "What is the correct syntax when referring to an external script that is called 'script.js'?",
+    answers: [{
+            text: "<script href='script.js'>",
+            correct: false
+        },
+        {
+            text: "<script name='script.js'>",
+            correct: false
+        },
+        {
+            text: "<script src='script.js'>",
+            correct: true
+        },
+        {
+            text: "<script class='script.js'>",
+            correct: false
+        }
+    ]
+}, {
+    id: 3,
+    question: "How do you create a function on JavaScript?",
+    answers: [{
+            text: "function myFunction()",
+            correct: true
+        },
+        {
+            text: "function:myFunction()",
+            correct: false
+        },
+        {
+            text: "function = myFunction()",
+            correct: false
+        },
+        {
+            text: "function;myFunction()",
+            correct: false
+        }
+    ]
+}, {
+    id: 4,
+    question: "How do you write an IF statement in JavaScript?",
+    answers: [{
+            text: "if i==5 then",
+            correct: false
+        },
+        {
+            text: "if i=5",
+            correct: false
+        },
+        {
+            text: "if i=5 then",
+            correct: false
+        },
+        {
+            text: "if (i==5)",
+            correct: true
+        }
+    ]
+}, {
+    id: 5,
+    question: "How does a WHILE loop begin?",
+    answers: [{
+            text: "while( (i<=10;i++)",
+            correct: false
+        },
+        {
+            text: "while i=1 to 10",
+            correct: false
+        },
+        {
+            text: "while (i<=10)",
+            correct: true
+        },
+        {
+            text: "while (i++)",
+            correct: false
+        }
+    ]
+}, {
+    id: 6,
+    question: "How does a FOR loop begin?",
+    answers: [{
+            text: "for (i=0;i<=5;i++)",
+            correct: true
+        },
+        {
+            text: "for (i<=5;i++)",
+            correct: false
+        },
+        {
+            text: "for (i=0;I,=5)",
+            correct: false
+        },
+        {
+            text: "for i= 1 to 5",
+            correct: false
+        }
+    ]
+}, {
+    id: 7,
+    question: "Which event occurs when the user clicks on HTML element?",
+    answers: [{
+            text: "onchange",
+            correct: false
+        },
+        {
+            text: "onmouseover",
+            correct: false
+        },
+        {
+            text: "onmouseclick",
+            correct: false
+        },
+        {
+            text: "onclick",
+            correct: true
+        }
+    ]
+}, {
+    id: 8,
+    question: "How do you add a comment on JavaScript?",
+    answers: [{
+            text: "//This is a comment",
+            correct: true
+        },
+        {
+            text: "<!--This is a comment-->",
+            correct: false
+        },
+        {
+            text: "'This is a comment",
+            correct: false
+        },
+        {
+            text: "--This is a comment",
+            correct: false
+        }
+    ]
+}, {
+    id: 9,
+    question: "How do you round the number 7.25 to the nearest integer on JavaScript?",
+    answers: [{
+            text: "Math.round(7.25)",
+            correct: true
+        },
+        {
+            text: "Math.rnd(7.25)",
+            correct: false
+        },
+        {
+            text: "round(7.25)",
+            correct: false
+        },
+        {
+            text: "rnd(7.25)",
+            correct: false
+        }
+    ]
+}]
+var score = 0
+var time = 5
+const startQuiz = document.getElementById("startbtn");
+
+startQuiz.addEventListener("click",function(){
+
+
+
+setInterval(() => {
+    document.querySelector(".timer").innerHTML = time
+    document.querySelector(".score").innerHTML = score
+    if (time === 0){
+        time = 0
+    }
+    else {
+        time--
+    }
+}, 1000)
+//generate first question once user presses the start button
+}) 
+
+
+function test(arg) {
+    // console.log(arg)
+    if (arg == true) {
+        console.log("correct")
+        score += time
+    } else {
+        console.log("incorrect")
+        time -= 5
+    }
+}
+
+console.log(document.querySelector(".option-container").children[0])
+
+for (let i = 0; i <= 3; i++) {
+
+    document.querySelector(".option-container").children[i].innerHTML = i
+
+    document.querySelector(".option-container").children[i].setAttribute("onclick", `test(${fish[0].answers[i].correct})`)
+}
