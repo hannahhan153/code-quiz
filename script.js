@@ -203,13 +203,4 @@ function scoreRender() {
     scoreDiv.innerHTML += "<p>" + scorePerCent + "%</p>";
 }
 
-
-
-
-
-
-
-
-
-
 // save initials and score
