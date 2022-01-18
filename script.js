@@ -208,12 +208,8 @@ function scoreRender() {
 
 
 
-// answer question incorrectly
 
-// time subtracted from clock
 
-// all questions answered OR timer reaches 0
 
-// game is over
 
 // save initials and score
