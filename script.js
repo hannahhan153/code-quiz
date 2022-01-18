@@ -206,11 +206,7 @@ function scoreRender() {
 
 
 
-// present with question
 
-// answer question
-
-// present with another question
 
 // answer question incorrectly
 
