@@ -204,7 +204,7 @@ function scoreRender() {
 }
 
 
-// timer starts
+
 
 // present with question
 
