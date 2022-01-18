@@ -1,4 +1,208 @@
-// click Start button
+// select all elements
+const start = document.getElementById("start");
+const quiz = document.getElementById("quiz");
+const question = document.getElementById("question");
+const qImg = document.getElementById("qImg");
+const choiceA = document.getElementById("A");
+const choiceB = document.getElementById("B");
+const choiceC = document.getElementById("C");
+const counter = document.getElementById("counter");
+const timeGauge = document.getElementById("timeGauge");
+const progress = document.getElementById("progress");
+const scoreDiv = document.getElementById("scoreContainer");
+
+const isStorage = 'undefined' !== typeof localStorage;
+// create questions
+let questions = [{
+    question: "1. In which HTML element do we put JavaScript?",
+    imgSrc: "images/js.png",
+    choiceA: "the js element",
+    choiceB: "the javascript element",
+    choiceC: "the script element",
+    correct: "C"
+}, {
+    question: "2. Where is the correct place to insert a  JavaScript?",
+    imgSrc: "images/js.png",
+    choiceA: "the body section",
+    choiceB: "the head section",
+    choiceC: "both are the body and head are correct",
+    correct: "C"
+}, {
+    question: "3. What is the script element we use when referring to an external script that is called 'script.js'?",
+    imgSrc: "images/js.png",
+    choiceA: "script href",
+    choiceB: "script src",
+    choiceC: "script name",
+    correct: "B"
+}, {
+    question: "4. How do you create a function on JavaScript?",
+    imgSrc: "images/js.png",
+    choiceA: "function myFunction()",
+    choiceB: ":myFunction()",
+    choiceC: "function = myFunction()",
+    correct: "A"
+}, {
+    question: "5. How do you write an IF statement in JavaScript?",
+    imgSrc: "images/js.png",
+    choiceA: "if i==5 then",
+    choiceB: "if i=5",
+    choiceC: "if (i==5)",
+    correct: "C"
+}, {
+    question: "6. How does a WHILE loop begin?",
+    imgSrc: "images/js.png",
+    choiceA: "while( (i<=10;i++)",
+    choiceB: "while i=1 to 10",
+    choiceC: "while (i<=10)",
+    correct: "C"
+}, {
+    question: "7. How does a FOR loop begin?",
+    imgSrc: "images/js.png",
+    choiceA: "for (i=0;i<=5;i++)",
+    choiceB: "for (i<=5;i++)",
+    choiceC: "for (i=0;I,=5)",
+    correct: "A"
+}, {
+    question: "8. Which event occurs when the user clicks on HTML element?",
+    imgSrc: "images/js.png",
+    choiceA: "onchange",
+    choiceB: "onmouseover",
+    choiceC: "onclick",
+    correct: "C"
+}, {
+    question: "9. How do you add a comment on JavaScript?",
+    imgSrc: "images/js.png",
+    choiceA: "//This is a comment",
+    choiceB: "(This is a comment)",
+    choiceC: "'This is a comment",
+    correct: "A"
+}, {
+    question: "10. How do you round the number 7.25 to the nearest integer on JavaScript?",
+    imgSrc: "images/js.png",
+    choiceA: "round(7.25)",
+    choiceB: "rnd(7.25)",
+    choiceC: "Math.round(7.25)",
+    correct: "C"
+}];
+
+// variable of the last question with index of last question
+const lastQuestion = questions.length - 1;
+// variable of first question with index of 0 
+let firstQuestion = 0;
+let count = 0;
+const questionTime = 10; // 10s
+const gaugeWidth = 150; // 150px
+const gaugeUnit = gaugeWidth / questionTime;
+let TIMER;
+let score = 0;
+
+// function to return a question
+function returnQuestion() {
+    let q = questions[firstQuestion];
+
+    question.innerHTML = "<p>" + q.question + "</p>";
+    qImg.innerHTML = "<img src=" + q.imgSrc + ">";
+    choiceA.innerHTML = q.choiceA;
+    choiceB.innerHTML = q.choiceB;
+    choiceC.innerHTML = q.choiceC;
+}
+// when page loads, user must click on "Start Quiz" to begin the quiz
+start.addEventListener("click", startQuiz);
+
+// start quiz
+function startQuiz() {
+    // hide the StartQuiz button
+    start.style.display = "none";
+    // will return question
+    returnQuestion();
+    // will display quiz block because set it to "none" on html
+    quiz.style.display = "block";
+    returnProgress();
+    returnCounter();
+    TIMER = setInterval(returnCounter, 1000); // 1000ms = 1s
+}
+
+// return progress
+function returnProgress() {
+
+    for (let qIndex = 0; qIndex <= lastQuestion; qIndex++) {
+        progress.innerHTML += "<div class='prog' id=" + qIndex + "></div>";
+    }
+}
+
+// counter return
+function returnCounter() {
+    if (count <= questionTime) {
+        counter.innerHTML = count;
+        timeGauge.style.width = count * gaugeUnit + "px";
+        count++
+    } else {
+        count = 0;
+        // change progress color to red
+        answerIsWrong();
+        if (firstQuestion < lastQuestion) {
+            firstQuestion++;
+            returnQuestion();
+        } else {
+            // end the quiz and show the score
+            clearInterval(TIMER);
+            scoreRender();
+        }
+    }
+}
+
+// checkAnwer
+
+function checkAnswer(answer) {
+    if (answer == questions[firstQuestion].correct) {
+        // answer is correct
+        score++;
+        // change progress color to green
+        answerIsCorrect();
+    } else {
+        // answer is wrong
+        // change progress color to red
+        answerIsWrong();
+    }
+    count = 0;
+    if (firstQuestion < lastQuestion) {
+        firstQuestion++;
+        returnQuestion();
+    } else {
+        // end the quiz and show the score
+        clearInterval(TIMER);
+        scoreRender();
+    }
+}
+
+// answer is correct
+function answerIsCorrect() {
+    document.getElementById(firstQuestion).style.backgroundColor = "#0f0";
+}
+
+// answer is Wrong
+function answerIsWrong() {
+    document.getElementById(firstQuestion).style.backgroundColor = "#f00";
+}
+
+// score return
+function scoreRender() {
+    scoreDiv.style.display = "block";
+
+    // calculate the amount of question percent answered by the user
+    const scorePerCent = Math.round(100 * score / questions.length);
+
+    // choose the image based on the scorePerCent
+    let img = (scorePerCent >= 80) ? "images/5.png" :
+        (scorePerCent >= 60) ? "images/4.png" :
+        (scorePerCent >= 40) ? "images/3.png" :
+        (scorePerCent >= 20) ? "images/2.png" :
+        "images/1.png";
+
+    scoreDiv.innerHTML = "<img src=" + img + ">";
+    scoreDiv.innerHTML += "<p>" + scorePerCent + "%</p>";
+}
+
 
 // timer starts
 
@@ -17,350 +221,3 @@
 // game is over
 
 // save initials and score
-// questions will be asked
-const Questions = [{
-    id: 0,
-    q: "In which HTML element do we put JavaScript?",
-    a: [{
-            text: "<js>",
-            correct: false
-        },
-        {
-            text: "<javascript>",
-            correct: false
-        },
-        {
-            text: "<script>",
-            correct: true
-        },
-        {
-            text: "<scripting>",
-            correct: false
-        }
-    ]
-}, {
-    id: 1,
-    q: "Where is the correct place to insert a  JavaScript?",
-    a: [{
-            text: "the <body> section",
-            correct: false
-        },
-        {
-            text: "the <div> section",
-            correct: false
-        },
-        {
-            text: "the <head> section",
-            correct: false
-        },
-        {
-            text: "both are the <body> and <head> are correct",
-            correct: true
-        }
-    ]
-}, {
-    id: 2,
-    q: "What is the correct syntax when referring to an external script that is called 'script.js'?",
-    a: [{
-            text: "<script href='script.js'>",
-            correct: false
-        },
-        {
-            text: "<script name='script.js'>",
-            correct: false
-        },
-        {
-            text: "<script src='script.js'>",
-            correct: true
-        },
-        {
-            text: "<script class='script.js'>",
-            correct: false
-        }
-    ]
-}, {
-    id: 3,
-    q: "How do you create a function on JavaScript?",
-    a: [{
-            text: "function myFunction()",
-            correct: true
-        },
-        {
-            text: "function:myFunction()",
-            correct: false
-        },
-        {
-            text: "function = myFunction()",
-            correct: false
-        },
-        {
-            text: "function;myFunction()",
-            correct: false
-        }
-    ]
-}, {
-    id: 4,
-    q: "How do you write an IF statement in JavaScript?",
-    a: [{
-            text: "if i==5 then",
-            correct: false
-        },
-        {
-            text: "if i=5",
-            correct: false
-        },
-        {
-            text: "if i=5 then",
-            correct: false
-        },
-        {
-            text: "if (i==5)",
-            correct: true
-        }
-    ]
-}, {
-    id: 5,
-    q: "How does a WHILE loop begin?",
-    a: [{
-            text: "while( (i<=10;i++)",
-            correct: false
-        },
-        {
-            text: "while i=1 to 10",
-            correct: false
-        },
-        {
-            text: "while (i<=10)",
-            correct: true
-        },
-        {
-            text: "while (i++)",
-            correct: false
-        }
-    ]
-}, {
-    id: 6,
-    q: "How does a FOR loop begin?",
-    a: [{
-            text: "for (i=0;i<=5;i++)",
-            correct: true
-        },
-        {
-            text: "for (i<=5;i++)",
-            correct: false
-        },
-        {
-            text: "for (i=0;I,=5)",
-            correct: false
-        },
-        {
-            text: "for i= 1 to 5",
-            correct: false
-        }
-    ]
-}, {
-    id: 7,
-    q: "Which event occurs when the user clicks on HTML element?",
-    a: [{
-            text: "onchange",
-            correct: false
-        },
-        {
-            text: "onmouseover",
-            correct: false
-        },
-        {
-            text: "onmouseclick",
-            correct: false
-        },
-        {
-            text: "onclick",
-            correct: true
-        }
-    ]
-}, {
-    id: 8,
-    q: "How do you add a comment on JavaScript?",
-    a: [{
-            text: "//This is a comment",
-            correct: true
-        },
-        {
-            text: "<!--This is a comment-->",
-            correct: false
-        },
-        {
-            text: "'This is a comment",
-            correct: false
-        },
-        {
-            text: "--This is a comment",
-            correct: false
-        }
-    ]
-}, {
-    id: 9,
-    q: "How do you round the number 7.25 to the nearest integer on JavaScript?",
-    a: [{
-            text: "Math.round(7.25)",
-            correct: true
-        },
-        {
-            text: "Math.rnd(7.25)",
-            correct: false
-        },
-        {
-            text: "round(7.25)",
-            correct: false
-        },
-        {
-            text: "rnd(7.25)",
-            correct: false
-        }
-    ]
-}]
-var score = 0
-var time = 5
-var start = true;
-// Iterate function displays questions and options based on "id"
-function iterate(id) {
-    // Getting Result displayed
-    var result = document.getElementsByClassName("result");
-    result[0].innerText = "";
-
-    // Getting Question
-    const question = document.getElementById("question");
-
-    // Setting Question Text
-    question.innerText = Questions[id].q;
-
-    // Getting Options
-    const op1= document.getElementById('op1');
-    const op2= document.getElementById('op2');
-    const op3= document.getElementById('op3');
-    const op4= document.getElementById('op4');
-
-    // Providing Option Text
-    op1.innerText = Questions[id].a[0].text;
-    op2.innerText = Questions[id].a[1].text;
-    op3.innerText = Questions[id].a[2].text;
-    op4.innerText = Questions[id].a[3].text;
-
-    // Providing True or False value to options
-    op1.value = Questions[id].a[0].correct;
-    op2.value = Questions[id].a[1].correct;
-    op3.value = Questions[id].a[2].correct;
-    op4.value = Questions[id].a[3].correct;
-
-    var selected = "";
-
-    // Show selection for op1
-    op1.addEventListener("click", () => {
-        op1.style.backgroundColor = "green";
-        op2.style.backgroundColor = "red";
-        op3.style.backgroundColor = "red";
-        op4.style.backgroundColor = "red";
-        // value for option button 
-        selected = op1.value;
-    })
-
-    // Show selection for op2
-    op2.addEventListener("click", () => {
-        op1.style.backgroundColor = "red";
-        op2.style.backgroundColor = "green";
-        op3.style.backgroundColor = "red";
-        op4.style.backgroundColor = "red";
-        selected = op2.value;
-    })
-
-    op3.addEventListener("click", () => {
-        op1.style.backgroundColor = "red";
-        op2.style.backgroundColor = "red";
-        op3.style.backgroundColor = "green";
-        op4.style.backgroundColor = "red";
-        
-        selected = op3.value;
-    })
-
-    op4.addEventListener("click", () => {
-        op1.style.backgroundColor = "red";
-        op2.style.backgroundColor = "red";
-        op3.style.backgroundColor = "red";
-        op4.style.backgroundColor = "green";
-
-        selected = op4.value;
-    })
-
-    // Grabbing evaluate button
-    const evaluate = document.getElementsByClassName("evaluate");
-
-    // Evaluate method
-    evaluate[0].addEventListener("click", () => {
-        if (selected == "true") {
-            result[0].innerHTML = "True";
-            result[0].style.color = "blue";
-
-        } else {
-            result[0].innerHTML = "False";
-            result[0].innerHTML = "False";
-            result[0].style.color = "red";
-        }
-    })
-}
-
-if (start) {
-    iterate("0")
-}
-
-//Next button and method
-const next = document.getElementsByClassName ('next')[0];
-var id = 0;
-
-next.addEventListener("click", () => {
-    start = false;
-    if (id <2 ) {
-        id++;
-        iterate(id);
-        console.log(id);
-    }
-})
-
-const startQuiz = document.getElementById("startbtn");
-
-startQuiz.addEventListener("click",function(){
-
-
-
-setInterval(() => {
-    document.querySelector(".timer").innerHTML = time
-    document.querySelector(".score").innerHTML = score
-    if (time === 0){
-        time = 0
-    }
-    else {
-        time--
-    }
-}, 1000)
-//generate first question once user presses the start button
-}) 
-
-
-function test(arg) {
-    // console.log(arg)
-    if (arg == true) {
-        console.log("correct")
-        score += time
-    } else {
-        console.log("incorrect")
-        time -= 5
-    }
-}
-
-console.log(document.querySelector(".option-container").children[0])
-
-//for (let i = 0; i <= 3; i++) {
-
-    //document.querySelector(".option-container").children[i].innerHTML = i
-
-    //document.querySelector(".option-container").children[i].setAttribute("onclick", `test(${Questions[0].a[i].correct})`)
-//}

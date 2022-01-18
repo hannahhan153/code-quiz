@@ -1,40 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Quiz</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Quiz</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="start">
-        <button id="startbtn" onclick="">start</button>  
-    </div>
-    <div class="panel"> 
-        <div class="result">
 
+<body>
+    <div id="container">
+        <div id="start">Start Quiz</div>
+        <div id="quiz" style="display: none">
+            <div id="question"></div>
+            <div id="qImg"></div>
+            <div id="choices">
+                <div class="choice" id="A" onclick="checkAnswer('A')"></div>
+                <div class="choice" id="B" onclick="checkAnswer('B')"></div>
+                <div class="choice" id="C" onclick="checkAnswer('C')"></div>
+            </div>
+            <div id="timer">
+                <div id="counter"></div>
+                <div id="btimeGauge"></div>
+                <div id="timeGauge"></div>
+            </div>
+            <div id="progress"></div>
         </div>
-        <div class="question-container" id="question">
-            Question goes here
-        </div>
-        <div class="timer">
-            
-        </div>
-        <div class="score">
-            
-        </div>
-        <div class="option-container">
-            <button class="option" onclick="" id="op1" >option1</button>
-            <button class="option" id="op2" >option 2</button>
-            <button class="option" id="op3">option3</button>
-            <button class="option" id="op4">option4</button>
-        </div>
-        <div class="navigation">
-            <button class="evaluate">Evaluate</button>
-            <button class="next">Next</button>
-        </div>
+        <div id="scoreContainer" style="display: none"></div>
     </div>
     <script src="./script.js"></script>
 </body>
+
 </html>
